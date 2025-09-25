@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Expense Tracker</string>
+
+    <!-- Login Screen -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="login_success">Login successful</string>
+    <string name="register_success">Registration successful</string>
+
+    <!-- Main Screen -->
+    <string name="welcome">Welcome</string>
+    <string name="today">Today</string>
+    <string name="todays_summary">Today\'s Summary</string>
+    <string name="opening_balance">Opening Balance</string>
+    <string name="closing_balance">Closing Balance</string>
+    <string name="total_income">Total Income</string>
+    <string name="total_expense">Total Expense</string>
+    <string name="add_transaction">ADD TRANSACTION</string>
+    <string name="search_transactions">SEARCH TRANSACTIONS</string>
+    <string name="manage_users">MANAGE USERS (ADMIN)</string>
+
+    <!-- Transaction Screen -->
+    <string name="transaction_type">Transaction Type</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="amount">Amount</string>
+    <string name="category">Category</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="save_transaction">SAVE TRANSACTION</string>
+    <string name="select">SELECT</string>
+
+    <!-- Search Screen -->
+    <string name="search">SEARCH</string>
+    <string name="edit">EDIT</string>
+    <string name="delete">DELETE</string>
+
+    <!-- Menu -->
+    <string name="logout">Logout</string>
+
+    <!-- Messages -->
+    <string name="transaction_saved">Transaction saved successfully</string>
+    <string name="transaction_updated">Transaction updated successfully</string>
+    <string name="transaction_deleted">Transaction deleted successfully</string>
+    <string name="error_saving_transaction">Error saving transaction</string>
+    <string name="error_loading_data">Error loading data</string>
+    <string name="no_transactions_found">No transactions found for this date</string>
+    <string name="fill_all_fields">Please fill all required fields</string>
+    <string name="invalid_amount">Please enter a valid amount</string>
+
+    <!-- User Management -->
+    <string name="user_status_updated">User status updated successfully</string>
+    <string name="access_denied">Access denied. Admin privileges required.</string>
+    <string name="active">Active</string>
+    <string name="inactive">Inactive</string>
+</resources>
