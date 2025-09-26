@@ -364,49 +364,68 @@ public class AddTransactionActivity extends AppCompatActivity {
         }
 
         // Calculate new opening balance for the updated date
-        BalanceCalculator.calculateOpeningBalance(currentUser.getUid(), date,
+        BalanceCalculator.calculateOpeningBalance(userCompanyId, date, // CHANGED: userCompanyId instead of currentUser.getUid()
                 new BalanceCalculator.OnBalanceCalculatedListener() {
                     @Override
                     public void onBalanceCalculated(double openingBalance) {
-                        Log.d(TAG, "New opening balance calculated: ₹" + openingBalance);
+                        Log.d(TAG, "Opening balance calculated: ₹" + openingBalance);
 
-                        // Calculate new closing balance
+                        // Calculate closing balance
                         double closingBalance = BalanceCalculator.calculateClosingBalance(
                                 openingBalance, type, amount);
 
-                        Log.d(TAG, "New closing balance calculated: ₹" + closingBalance);
+                        Log.d(TAG, "Closing balance calculated: ₹" + closingBalance);
 
-                        // Update existing transaction object
-                        existingTransaction.setType(type);
-                        existingTransaction.setAmount(amount);
-                        existingTransaction.setCategory(category);
-                        existingTransaction.setDescription(description);
-                        existingTransaction.setDate(date);
-                        existingTransaction.setTimestamp(System.currentTimeMillis());
-                        existingTransaction.setOpeningBalance(openingBalance);
-                        existingTransaction.setClosingBalance(closingBalance);
-                        existingTransaction.setCompanyId(userCompanyId); // Ensure company ID is set
+                        // Create transaction object with company ID
+                        Transaction transaction = new Transaction(
+                                currentUser.getUid(),
+                                userCompanyId, // IMPORTANT: Include company ID
+                                type,
+                                amount,
+                                category,
+                                description,
+                                date,
+                                System.currentTimeMillis(),
+                                openingBalance,
+                                closingBalance
+                        );
 
-                        // Update in Firebase
-                        FirebaseHelper.getInstance().updateTransaction(transactionId, existingTransaction,
+                        // Save to Firebase
+                        FirebaseHelper.getInstance().addTransaction(transaction,
                                 new FirebaseHelper.OnCompleteListener() {
                                     @Override
                                     public void onSuccess(String message) {
-                                        Log.d(TAG, "Transaction updated in Firebase successfully");
-                                        hideLoadingAndFinish("Transaction updated successfully");
+                                        Log.d(TAG, "Transaction saved to Firebase successfully");
+
+                                        // CRITICAL FIX: Use company ID for recalculation instead of user ID
+                                        BalanceCalculator.recalculateAllBalancesFromDate(
+                                                userCompanyId, date, // CHANGED: userCompanyId instead of currentUser.getUid()
+                                                new BalanceCalculator.OnRecalculationCompleteListener() {
+                                                    @Override
+                                                    public void onRecalculationComplete(String message) {
+                                                        Log.d(TAG, "Balance recalculation completed successfully");
+                                                        hideLoadingAndFinish("Transaction saved successfully");
+                                                    }
+
+                                                    @Override
+                                                    public void onRecalculationError(String error) {
+                                                        Log.e(TAG, "Balance recalculation failed: " + error);
+                                                        hideLoadingAndFinish("Transaction saved but balance update failed");
+                                                    }
+                                                });
                                     }
 
                                     @Override
                                     public void onFailure(String error) {
-                                        Log.e(TAG, "Failed to update transaction: " + error);
-                                        hideLoadingAndShowError("Failed to update transaction: " + error);
+                                        Log.e(TAG, "Failed to save transaction: " + error);
+                                        hideLoadingAndShowError("Failed to save transaction: " + error);
                                     }
                                 });
                     }
 
                     @Override
                     public void onError(String error) {
-                        Log.e(TAG, "Failed to calculate opening balance for update: " + error);
+                        Log.e(TAG, "Failed to calculate opening balance: " + error);
                         hideLoadingAndShowError("Error calculating balance: " + error);
                     }
                 });
