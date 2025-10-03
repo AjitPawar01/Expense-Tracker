@@ -13,6 +13,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.button.MaterialButton;
+import android.graphics.Color;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.expensetracker.app.R;
@@ -38,6 +40,8 @@ public class AddTransactionActivity extends AppCompatActivity {
     private Transaction existingTransaction; // Store existing transaction data
     private boolean isEditMode = false;
     private String userCompanyId = "default_company"; // Will be set from user profile
+    private MaterialButton btnIncome, btnExpense;
+    private boolean isIncomeSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         userCompanyId = getCompanyIdFromEmail(currentUser.getEmail());
 
         initViews();
+        setupToggleButtons();
         setupToolbar();
         setupClickListeners();
         setDefaultDate();
@@ -538,6 +543,62 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         Log.d(TAG, "All input validation passed");
         return true;
+    }
+
+    private void setupToggleButtons() {
+        btnIncome = findViewById(R.id.btnIncome);
+        btnExpense = findViewById(R.id.btnExpense);
+
+        // Set initial state (Expense selected by default)
+        selectExpense();
+
+        btnIncome.setOnClickListener(v -> selectIncome());
+        btnExpense.setOnClickListener(v -> selectExpense());
+
+        // Make etDate clickable
+        if (etDate != null) {
+            etDate.setOnClickListener(v -> showDatePicker());
+        }
+    }
+
+    private void selectIncome() {
+        isIncomeSelected = true;
+
+        // Update button states
+        btnIncome.setBackgroundColor(getResources().getColor(R.color.income_color));
+        btnIncome.setTextColor(Color.WHITE);
+        btnIncome.setIconTintResource(android.R.color.white);
+
+        btnExpense.setBackgroundColor(Color.TRANSPARENT);
+        btnExpense.setTextColor(getResources().getColor(R.color.text_primary));
+        btnExpense.setIconTintResource(R.color.expense_color);
+
+        // Update hidden radio button
+        if (rbIncome != null) {
+            rbIncome.setChecked(true);
+        }
+
+        Log.d(TAG, "Income selected");
+    }
+
+    private void selectExpense() {
+        isIncomeSelected = false;
+
+        // Update button states
+        btnExpense.setBackgroundColor(getResources().getColor(R.color.expense_color));
+        btnExpense.setTextColor(Color.WHITE);
+        btnExpense.setIconTintResource(android.R.color.white);
+
+        btnIncome.setBackgroundColor(Color.TRANSPARENT);
+        btnIncome.setTextColor(getResources().getColor(R.color.text_primary));
+        btnIncome.setIconTintResource(R.color.income_color);
+
+        // Update hidden radio button
+        if (rbExpense != null) {
+            rbExpense.setChecked(true);
+        }
+
+        Log.d(TAG, "Expense selected");
     }
 
     @Override

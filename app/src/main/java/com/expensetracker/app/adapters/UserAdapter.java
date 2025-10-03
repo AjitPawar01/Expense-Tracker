@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private List<User> users;
@@ -48,17 +49,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     class UserViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvUsername, tvEmail, tvRole, tvBalance, tvCreatedDate;
-        private Switch switchStatus;
+        private TextView  tvUsername, tvEmail, tvRole, tvBalance, tvCreatedDate;
+        private SwitchMaterial switchStatus;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
+            //ivUserProfile = itemView.findViewById(R.id.ivUserProfile);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvEmail = itemView.findViewById(R.id.tvEmail);
             tvRole = itemView.findViewById(R.id.tvRole);
             tvBalance = itemView.findViewById(R.id.tvBalance);
             tvCreatedDate = itemView.findViewById(R.id.tvCreatedDate);
-            switchStatus = itemView.findViewById(R.id.switchStatus);
+            switchStatus = itemView.findViewById(R.id.switchStatus); // This will now work
 
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();

@@ -1,15 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme -->
+    <!-- Base Light Theme -->
     <style name="Theme.ExpenseTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
-        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnPrimary">@color/text_white</item>
 
         <!-- Secondary brand color -->
         <item name="colorSecondary">@color/accent_color</item>
         <item name="colorSecondaryVariant">@color/accent_color</item>
-        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="colorOnSecondary">@color/text_white</item>
 
         <!-- Status bar color -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -17,19 +17,52 @@
         <!-- Background colors -->
         <item name="android:colorBackground">@color/background_color</item>
         <item name="colorSurface">@color/surface_color</item>
+        <item name="colorOnSurface">@color/text_primary</item>
 
         <!-- Text colors -->
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+
+        <!-- Menu colors -->
+        <item name="android:textColorPrimaryInverse">@color/menu_text_color</item>
+        <item name="android:textColorSecondaryInverse">@color/menu_text_color</item>
 
         <!-- Button style -->
         <item name="materialButtonStyle">@style/CustomButton</item>
+
+        <!-- Text Input Layout style -->
+        <item name="textInputStyle">@style/CustomTextInputLayout</item>
     </style>
 
     <!-- Theme for activities without action bar -->
     <style name="Theme.ExpenseTracker.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Dark Theme -->
+    <style name="Theme.ExpenseTracker.Dark" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/text_white</item>
+
+        <item name="colorSecondary">@color/accent_color</item>
+        <item name="colorSecondaryVariant">@color/accent_color</item>
+        <item name="colorOnSecondary">@color/text_white</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">@color/dark_background</item>
+
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOnSurface">@color/dark_text_primary</item>
+
+        <item name="android:textColorPrimary">@color/dark_text_primary</item>
+        <item name="android:textColorSecondary">@color/dark_text_secondary</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+
+        <item name="materialButtonStyle">@style/CustomButton</item>
+        <item name="textInputStyle">@style/CustomTextInputLayout</item>
     </style>
 
     <!-- Custom button style -->
@@ -39,6 +72,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textColor">@color/text_white</item>
     </style>
 
     <!-- Custom card style -->
@@ -54,12 +88,19 @@
         <item name="boxStrokeColor">@color/primary_color</item>
         <item name="hintTextColor">@color/primary_color</item>
         <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+    </style>
+
+    <!-- Menu Popup Style -->
+    <style name="CustomPopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@color/surface_color</item>
+        <item name="android:textColor">@color/menu_text_color</item>
     </style>
 
     <!-- Tag styles -->
     <style name="IncomeTag">
         <item name="android:background">@drawable/bg_income_tag</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingStart">8dp</item>
@@ -70,7 +111,7 @@
 
     <style name="ExpenseTag">
         <item name="android:background">@drawable/bg_expense_tag</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingStart">8dp</item>
@@ -81,7 +122,7 @@
 
     <style name="AdminTag">
         <item name="android:background">@drawable/bg_admin_tag</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingStart">8dp</item>
@@ -92,7 +133,7 @@
 
     <style name="UserTag">
         <item name="android:background">@drawable/bg_user_tag</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingStart">8dp</item>
@@ -116,10 +157,10 @@
     </style>
 
     <style name="IncomeAmount" parent="SummaryAmount">
-        <item name="android:textColor">@android:color/holo_green_dark</item>
+        <item name="android:textColor">@color/income_color</item>
     </style>
 
     <style name="ExpenseAmount" parent="SummaryAmount">
-        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textColor">@color/expense_color</item>
     </style>
 </resources>

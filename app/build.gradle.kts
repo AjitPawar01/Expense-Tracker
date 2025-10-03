@@ -47,6 +47,12 @@ dependencies {
 
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    // For circular image view
+
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    // For image loading (Picasso)
+    implementation("com.squareup.picasso:picasso:2.8")
 
     // Firebase dependencies
     implementation (platform("com.google.firebase:firebase-bom:32.7.0"))
@@ -56,4 +62,10 @@ dependencies {
     implementation ("com.google.firebase:firebase-storage")
 
     implementation("com.wdullaer:materialdatetimepicker:4.2.3")
+
+    // SwipeRefreshLayout for pull-to-refresh
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    // MPAndroidChart for pie chart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

@@ -91,14 +91,23 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
 
         public void bind(Transaction transaction) {
+            // Get color indicator view
+            View colorIndicator = itemView.findViewById(R.id.colorIndicator);
+
             // Set transaction type with appropriate styling
             tvTransactionType.setText(transaction.getType());
             if ("INCOME".equals(transaction.getType())) {
                 tvTransactionType.setBackgroundResource(R.drawable.bg_income_tag);
-                tvAmount.setTextColor(itemView.getContext().getResources().getColor(android.R.color.holo_green_dark));
+                tvAmount.setTextColor(itemView.getContext().getResources().getColor(R.color.income_color));
+                if (colorIndicator != null) {
+                    colorIndicator.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.income_color));
+                }
             } else {
                 tvTransactionType.setBackgroundResource(R.drawable.bg_expense_tag);
-                tvAmount.setTextColor(itemView.getContext().getResources().getColor(android.R.color.holo_red_dark));
+                tvAmount.setTextColor(itemView.getContext().getResources().getColor(R.color.expense_color));
+                if (colorIndicator != null) {
+                    colorIndicator.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.expense_color));
+                }
             }
 
             // Set amount
@@ -109,6 +118,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
             // Set description
             String description = transaction.getDescription();
+            TextView tvDescription = itemView.findViewById(R.id.tvDescription);
             if (description != null && !description.trim().isEmpty()) {
                 tvDescription.setText(description);
                 tvDescription.setVisibility(View.VISIBLE);
@@ -116,14 +126,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 tvDescription.setVisibility(View.GONE);
             }
 
-            // Set timestamp
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-
+            // Set timestamp - shortened format
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
             try {
                 Date date = new Date(transaction.getTimestamp());
-                String timeString = dateFormat.format(date);
-                tvTimestamp.setText(timeString);
+                String timeString = timeFormat.format(date);
+                tvTimestamp.setText(transaction.getDate() + " " + timeString);
             } catch (Exception e) {
                 tvTimestamp.setText(transaction.getDate());
             }

@@ -3,8 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_logout"
-        android:title="@string/logout"
-        android:icon="@drawable/ic_logout"
-        app:showAsAction="never"/>
+        android:id="@+id/action_profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_account"
+        android:iconTint="@color/menu_item_color"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_theme"
+        android:title="Change Theme"
+        android:icon="@drawable/ic_theme"
+        android:iconTint="@color/menu_item_color"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_add_transaction"
+        android:title="Add Transaction"
+        android:icon="@drawable/ic_add"
+        android:iconTint="@color/menu_item_color"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_search_transactions"
+        android:title="Search Transactions"
+        android:icon="@drawable/ic_search"
+        android:iconTint="@color/menu_item_color"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manage_users"
+        android:title="Manage Users"
+        android:icon="@drawable/ic_users"
+        android:iconTint="@color/menu_item_color"
+        app:showAsAction="never" />
+
 </menu>

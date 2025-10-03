@@ -130,11 +130,10 @@ public class BalanceCalculator {
     /**
      * Get daily summary for a specific date with corrected balance calculations (UPDATED for company)
      */
-    public static void getDailySummary(String companyId, String date,
-                                       OnDailySummaryListener listener) {
-        Log.d(TAG, "Getting daily summary for date: " + date + ", company: " + companyId);
+    public static void getDailySummary(String companyId, String date, OnDailySummaryListener listener) {
+        Log.d(TAG, "Getting daily summary for COMPANY: " + companyId + ", date: " + date);
 
-        // First get opening balance from previous day
+        // First get opening balance from previous day (COMPANY-BASED)
         FirebaseHelper.getInstance().getLastTransactionBefore(companyId, date,
                 new FirebaseHelper.OnTransactionListener() {
                     @Override
@@ -142,12 +141,12 @@ public class BalanceCalculator {
                         double openingBalance = 0.0;
                         if (lastTransaction != null) {
                             openingBalance = lastTransaction.getClosingBalance();
-                            Log.d(TAG, "Opening balance from previous transaction: " + openingBalance);
+                            Log.d(TAG, "Opening balance from previous COMPANY transaction: " + openingBalance);
                         }
 
                         final double finalOpeningBalance = openingBalance;
 
-                        // Now get transactions for this specific date
+                        // Now get transactions for this specific date (COMPANY-BASED)
                         FirebaseHelper.getInstance().getTransactionsByDate(companyId, date,
                                 new FirebaseHelper.OnTransactionListListener() {
                                     @Override
@@ -155,11 +154,12 @@ public class BalanceCalculator {
                                         DailySummary summary = new DailySummary();
                                         summary.openingBalance = finalOpeningBalance;
 
-                                        Log.d(TAG, "Found " + transactions.size() + " transactions for " + date);
+                                        Log.d(TAG, "Found " + transactions.size() + " COMPANY transactions for " + date);
 
                                         if (transactions.isEmpty()) {
                                             // No transactions for this date, closing = opening
                                             summary.closingBalance = finalOpeningBalance;
+                                            Log.d(TAG, "No transactions today, carrying forward balance: " + finalOpeningBalance);
                                         } else {
                                             // Sort transactions by timestamp
                                             Collections.sort(transactions, (t1, t2) ->
@@ -180,7 +180,7 @@ public class BalanceCalculator {
                                             summary.closingBalance = runningBalance;
                                         }
 
-                                        Log.d(TAG, "Summary calculated - Opening: " + summary.openingBalance +
+                                        Log.d(TAG, "FINAL Summary - Opening: " + summary.openingBalance +
                                                 ", Closing: " + summary.closingBalance +
                                                 ", Income: " + summary.totalIncome +
                                                 ", Expense: " + summary.totalExpense);
@@ -190,7 +190,7 @@ public class BalanceCalculator {
 
                                     @Override
                                     public void onFailure(String error) {
-                                        Log.e(TAG, "Error getting transactions for summary: " + error);
+                                        Log.e(TAG, "Error getting COMPANY transactions for summary: " + error);
                                         listener.onSummaryError(error);
                                     }
                                 });
@@ -198,35 +198,8 @@ public class BalanceCalculator {
 
                     @Override
                     public void onFailure(String error) {
-                        Log.e(TAG, "Error getting opening balance for summary: " + error);
-                        // Still try to get summary with 0 opening balance
-                        FirebaseHelper.getInstance().getTransactionsByDate(companyId, date,
-                                new FirebaseHelper.OnTransactionListListener() {
-                                    @Override
-                                    public void onSuccess(List<Transaction> transactions) {
-                                        DailySummary summary = new DailySummary();
-                                        // Opening balance = 0 if no previous transactions
-
-                                        double runningBalance = 0.0;
-                                        for (Transaction transaction : transactions) {
-                                            if ("INCOME".equals(transaction.getType())) {
-                                                summary.totalIncome += transaction.getAmount();
-                                                runningBalance += transaction.getAmount();
-                                            } else if ("EXPENSE".equals(transaction.getType())) {
-                                                summary.totalExpense += transaction.getAmount();
-                                                runningBalance -= transaction.getAmount();
-                                            }
-                                        }
-
-                                        summary.closingBalance = runningBalance;
-                                        listener.onSummaryCalculated(summary);
-                                    }
-
-                                    @Override
-                                    public void onFailure(String error) {
-                                        listener.onSummaryError(error);
-                                    }
-                                });
+                        Log.e(TAG, "Error getting opening balance for COMPANY summary: " + error);
+                        listener.onSummaryError(error);
                     }
                 });
     }

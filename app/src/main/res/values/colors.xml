@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Colors -->
     <color name="primary_color">#2196F3</color>
     <color name="primary_dark">#1976D2</color>
     <color name="accent_color">#FF5722</color>
 
+    <!-- Background Colors -->
     <color name="background_color">#F5F5F5</color>
     <color name="surface_color">#FFFFFF</color>
 
+    <!-- Text Colors -->
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_black">#000000</color>
 
+    <!-- Status Colors -->
     <color name="success_color">#4CAF50</color>
     <color name="error_color">#F44336</color>
     <color name="warning_color">#FF9800</color>
 
+    <!-- Transaction Colors -->
     <color name="income_color">#4CAF50</color>
     <color name="expense_color">#F44336</color>
+
+    <!-- Menu and UI Colors -->
+    <color name="menu_item_color">#000000</color>
+    <color name="menu_text_color">#000000</color>
+    <color name="hint_color">#000000</color>
+
+    <!-- Dark Theme Colors -->
+    <color name="dark_background">#121212</color>
+    <color name="dark_surface">#1E1E1E</color>
+    <color name="dark_text_primary">#FFFFFF</color>
+    <color name="dark_text_secondary">#CCCCCC</color>
 </resources>
